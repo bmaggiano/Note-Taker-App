@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const notes = require('./db/db.json');
 
@@ -15,22 +16,17 @@ app.get('/api/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/db/db.json'));
 });
 
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, './public/index.html'))
-);
-
-app.get('/notes', (req, res) =>
-  res.sendFile(path.join(__dirname, './public/notes.html'))
-);
-
 app.post('/api/notes', (req, res) => {
 
-    const { title, text } = req.body;
+    const { title, text, id } = req.body;
 
     const newNote = {
         title,
         text,
+        id,
     };
+
+    newNote.id = uuidv4();
 
     fs.readFile("./db/db.json", 'utf8', (err, data) => {
         const notesArr = JSON.parse(data);
@@ -42,7 +38,7 @@ app.post('/api/notes', (req, res) => {
         err
             ? console.log(err)
             : console.log(
-                `new note has been submitted`
+                `new note has been submitted with an id of ${newNote.id}`
             )
     })
 })
@@ -56,8 +52,16 @@ app.post('/api/notes', (req, res) => {
 
 
 app.delete('api/notes/:id', (req, res) => {
-    
+    const requestedID = req.params
 })
+
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, './public/index.html'))
+);
+
+app.get('/notes', (req, res) =>
+  res.sendFile(path.join(__dirname, './public/notes.html'))
+);
 
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`)
