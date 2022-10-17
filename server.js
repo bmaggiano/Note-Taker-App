@@ -51,8 +51,12 @@ app.post('/api/notes', (req, res) => {
 })
 
 
-app.delete('api/notes/:id', (req, res) => {
-    const requestedID = req.params
+app.delete('/api/notes/:id', (req, res) => {
+    const id = req.params.id;
+    const notes = JSON.parse(fs.readFileSync('./db/db.json'));
+    const removeIndex = notes.filter((item) => item.id !== id);
+    fs.writeFileSync('./db/db.json', JSON.stringify(removeIndex));
+    res.json(removeIndex);
 })
 
 app.get('/', (req, res) =>
