@@ -5,8 +5,7 @@ const path = require('path');
 const notes = require('./db/db.json');
 
 const app = express();
-const PORT = 3001;
-
+const port = process.env.PORT || 3001
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
