@@ -38,7 +38,7 @@ app.post('/api/notes', (req, res) => {
         err
             ? console.log(err)
             : console.log(
-                `new note has been submitted with an id of ${newNote.id}`
+                `New note has been submitted with an id of ${newNote.id}`
             )
     })
 })
@@ -57,6 +57,7 @@ app.delete('/api/notes/:id', (req, res) => {
     const removeIndex = notes.filter((item) => item.id !== id);
     fs.writeFileSync('./db/db.json', JSON.stringify(removeIndex));
     res.json(removeIndex);
+    console.log(`You have removed an item from the list`)
 })
 
 app.get('/', (req, res) =>
