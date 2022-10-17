@@ -11,6 +11,7 @@ As a bonus, we implemented UUID which automatically assigned each item in the ar
 In order to make this app work on the developer end, we would need to require a couple of different technologies:
 
 Using UUID for random id generation: npm i uuid
+
 Using Express.js for routes/middleware/server: npm i express
 
 ## Screenshots/Videos/Usage
