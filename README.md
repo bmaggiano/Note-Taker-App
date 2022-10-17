@@ -6,6 +6,10 @@ This app allows a user to keep track of notes given they enter a title, and a me
 
 As a bonus, we implemented UUID which automatically assigned each item in the array a random and unique character id so that we could keep track of objects in the array for deletion. The note taker app is a very real world, useful tool that a lot of us would need in our day to day live's not only as software engineers, but as ordinary everyday folks.
 
+## Link to deployed app
+
+https://murmuring-reaches-28307.herokuapp.com/
+
 ## Installation/Credits
 
 In order to make this app work on the developer end, we would need to require a couple of different technologies:
