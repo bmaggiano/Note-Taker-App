@@ -1,20 +1,25 @@
+// requiring dependencies and file paths
 const express = require('express');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const notes = require('./db/db.json');
 
+//create instances of express and our port for heroku
 const app = express();
 const PORT = process.env.PORT || 3001
 
-app.use(express.urlencoded({ extended: true }));
+// middleware
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Get route for api/notes to read from our database
 app.get('/api/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/db/db.json'));
 });
 
+// Post route for api/notes that allows user to input note and write a new db file
 app.post('/api/notes', (req, res) => {
 
     const { title, text, id } = req.body;
@@ -49,7 +54,8 @@ app.post('/api/notes', (req, res) => {
     res.json(response)
 })
 
-
+// Delete route, reads into db file, filters through the current array and prints different array
+// without the current id
 app.delete('/api/notes/:id', (req, res) => {
     const id = req.params.id;
     const notes = JSON.parse(fs.readFileSync('./db/db.json'));
@@ -59,14 +65,17 @@ app.delete('/api/notes/:id', (req, res) => {
     console.log(`You have removed an item from the list`)
 })
 
+// Get route for the home page in case middleware fails
 app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, './public/index.html'))
 );
 
+// Get route for the notes.html page
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, './public/notes.html'))
 );
 
+// Listens for port and then starts the server
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`)
 })
